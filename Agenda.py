@@ -101,13 +101,13 @@ def menu():
 carregar()
 while True:
     menu()
-    opcao = int(input("Digite uma opção "))
-    if opcao == 1:
+    opcao = input("Digite uma opção ")
+    if opcao == '1':
         mostrar_contatos()
-    if opcao == 2:
+    if opcao == '2':
         contato=input("Digite o nome do contato")
         buscar_contato(contato)
-    if opcao == 3:
+    if opcao == '3':
         contato=input("Digite o nome do contato")
         try:
             agenda[contato]
@@ -115,7 +115,7 @@ while True:
         except:
             telefone, email, endereco = ler_detalhes_contato()# leio cada variável e retorno em suas respectivas variáveis
             incluir_contato(contato, telefone, email, endereco)
-    if opcao == 4:
+    if opcao == '4':
         contato=input("Digite o nome do contato")
         try:
             agenda[contato]
@@ -123,21 +123,22 @@ while True:
             incluir_contato(contato, telefone, email, endereco)
         except:
             print("Contato inexistente")
-    if opcao == 5:
+    if opcao == '5':
         contato=input("Digite o nome do contato que deseja excluir")
         excluir_contato(contato)
 
-    if opcao == 6:
+    if opcao == '6':
         arquivo = input("Digite o nome do arquivo a ser Exportado")
         exportar_contatos(arquivo)
 
 
-    if opcao == 7:
+    if opcao == '7':
         arquivo=input("Digite o nome do arquivo a ser importado")
         importar_contatos(arquivo)
 
-    if opcao == 0:
+    if opcao == '0':
         print("Fechando programa")
         break
+
 
 
