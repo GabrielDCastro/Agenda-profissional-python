@@ -1,14 +1,5 @@
 agenda={}
 
-agenda['gabriel'] = {
-    'telefone': '123456789',
-    'email':'eu@gmail.com',
-    'endereco': 'av. 1',}
-
-agenda['nathalia'] = {
-    'telefone': '123456999',
-    'email':'ela@gmail.com',
-    'endereco': 'av. 2',}
 
 def mostrar_contatos():
     for contato in agenda:
@@ -36,18 +27,19 @@ def incluir_contato(contato, telefone, email, endereco):
         'email': email,
         'endereco': endereco
     }
+    salvar()
 
 
 def excluir_contato(contato):
     try:
         agenda.pop(contato)
+        salvar()
     except:
         print("Contato inexistente")
 
-def exportar_contatos():
+def exportar_contatos(nome_do_arquivo):
     try:
-        with open("agenda.csv", 'w') as arquivo:
-            arquivo.write("nome,telefone,email,endereço\n")
+        with open(nome_do_arquivo, 'w') as arquivo:
             for contato in agenda:
                 telefone=agenda[contato]['telefone']
                 email=agenda[contato]['email']
@@ -73,6 +65,29 @@ def importar_contatos(nome_do_arquivo):
     except Exception as error:
         print("Algum erro ocorreu")
 
+def salvar():
+    exportar_contatos('database.csv')
+
+def carregar():
+    try:
+        with open('database.csv', 'r') as arquivo:
+            linhas = arquivo.readlines()
+            for linha in linhas:
+                detalhes = linha.strip().split(',')
+                nome = detalhes[0]
+                telefone = detalhes[1]
+                email = detalhes[2]
+                endereco = detalhes[3]
+
+                agenda[nome] = {
+                    'telefone': telefone,
+                    'email': email,
+                    'endereco': endereco
+                }
+    except:
+        print("Ocorreu algum erro")
+
+
 def menu():
     print("1 - Mostrar agenda")
     print("2 - Buscar contato")
@@ -83,7 +98,7 @@ def menu():
     print("7 - Importat contatos para arquivo de texto")
     print("0 - fechar ")
 
-
+carregar()
 while True:
     menu()
     opcao = int(input("Digite uma opção "))
@@ -108,12 +123,13 @@ while True:
             incluir_contato(contato, telefone, email, endereco)
         except:
             print("Contato inexistente")
-    if opcao==5:
+    if opcao == 5:
         contato=input("Digite o nome do contato que deseja excluir")
         excluir_contato(contato)
 
     if opcao == 6:
-        exportar_contatos()
+        arquivo = input("Digite o nome do arquivo a ser Exportado")
+        exportar_contatos(arquivo)
 
 
     if opcao == 7:
@@ -123,4 +139,5 @@ while True:
     if opcao == 0:
         print("Fechando programa")
         break
+
 
